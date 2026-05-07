@@ -5,7 +5,7 @@ local M = {}
 
 function M.setup(opts)
   config.setup(opts)
-  local keymap = config.get().keymap
+  local keymap = config.get().keymap or "<F2>"
   if keymap then
     vim.keymap.set("n", keymap, function()
       M.run()
