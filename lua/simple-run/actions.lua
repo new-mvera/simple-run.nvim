@@ -29,7 +29,6 @@ function M.run()
   local input
   local cfg = config.get()
 
-  -- Check what actions are available
   local has_compile = lang_config.compile ~= nil
   local has_build = lang_config.build ~= nil
   local has_debug = lang_config.debug ~= nil
@@ -61,7 +60,23 @@ function M.run()
     return
   end
   vim.cmd("w")
+
+  vim.g.simple_run_term = true
+
   vim.cmd("terminal " .. command)
+
+  vim.api.nvim_create_autocmd("TermOpen", {
+    pattern = "*",
+    once = true,
+    callback = function()
+      if vim.g.simple_run_term then
+      vim.cmd("startinsert")
+      vim.opt_local.number = false
+      vim.opt_local_relativenumber = false
+      vim.g.simple_run_term = nil
+    end
+    end,
+  })
 end
 
 return M
