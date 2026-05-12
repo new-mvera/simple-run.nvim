@@ -69,6 +69,16 @@ require("simple-run").setup({
 
 You can extend simple-run.nvim with support for additional languages by modifying your configuration.
 
+```lua
+require("simple-run").setup({
+languages = {
+python = {
+compile = function()
+return "pyhton" .. vim.fn.expand("%:P")
+end}}
+})
+```
+
 ## License
 
 MIT
